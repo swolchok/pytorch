@@ -167,7 +167,7 @@ def _validate_loaded_sparse_tensors():
                 # TODO: Validation currently involves an expensive traversal
                 # on CPU, which may include a device transfer.
                 torch._validate_sparse_csr_tensor_args(t.crow_indices(), t.col_indices(),
-                                                       t.values(), t.size())
+                                                       t.values(), t.size(), torch.sparse_csr)
             else:
                 raise NotImplementedError(
                     '_validate_loaded_sparse_tensors for layout `%s`' % (t.layout))
@@ -187,7 +187,7 @@ def _rebuild_sparse_tensor(layout, data):
 def _rebuild_sparse_csr_tensor(layout, data):
     if layout == torch.sparse_csr:
         crow_indices, col_indices, values, size = data
-        result = torch._sparse_csr_tensor_unsafe(crow_indices, col_indices, values, size)
+        result = torch._sparse_csr_tensor_unsafe(crow_indices, col_indices, values, size, layout=torch.sparse_csr)
         _sparse_tensors_to_validate.append(result)
         return result
 
