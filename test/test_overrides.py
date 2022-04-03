@@ -695,9 +695,6 @@ def generate_tensor_like_override_tests(cls):
         setattr(cls, name, test_method)
 
 generate_tensor_like_override_tests(TestTorchFunctionOverride)
-TestTorchFunctionOverride.test_torch_functional_histogramdd = unittest.skip(
-    "histogramdd is missing __torch_function__ support")(
-        TestTorchFunctionOverride.test_torch_functional_histogramdd)
 
 class Wrapper:
     "Basic data container that knows how to unwrap itself"
